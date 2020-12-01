@@ -13,6 +13,10 @@ const server = http.createServer((request, responce) => {
     "public",
     request.url === "/" ? "index.html" : request.url
   );
+  const ext = path.extname(filePath);
+  if (!ext) {
+    filePath += ".html";
+  }
 
   console.log(filePath);
   fs.readFile(filePath, (err, content) => {
