@@ -15,20 +15,25 @@ const server = http.createServer((request, responce) => {
   );
 
   console.log(filePath);
-  fs.readFile(filePath, (err, data) => {
+  fs.readFile(filePath, (err, content) => {
     if (err) {
       fs.readFile(path.join(__dirname, "public", "error.html"), (err, data) => {
         if (err) {
           responce.writeHead(500);
           responce.end("Error");
         } else {
-          responce.writeHead(200, { "Content-type": "html" });
+          responce.writeHead(200, { "Content-type": "text/html" });
           responce.end(data);
         }
       });
+    } else {
+      responce.writeHead(200, {
+        "Content-type": "text/html",
+      });
+      responce.end(content);
     }
   });
-  responce.end();
+
   // responce.writeHead(200, { "Content-type": "text/html" });
   // responce.writeHead(200, { "Content-type": "text/plain" });
   // if (request.url === "/") {
