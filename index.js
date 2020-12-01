@@ -14,6 +14,17 @@ const server = http.createServer((request, responce) => {
     request.url === "/" ? "index.html" : request.url
   );
   const ext = path.extname(filePath);
+
+  let contentType = "text/html";
+  switch (ext) {
+    case ".css":
+      contentType = "text/css";
+      break;
+    case ".js":
+      contentType = "text/javascript";
+    case ".html":
+      contentType = "text/html";
+  }
   if (!ext) {
     filePath += ".html";
   }
@@ -32,7 +43,7 @@ const server = http.createServer((request, responce) => {
       });
     } else {
       responce.writeHead(200, {
-        "Content-type": "text/html",
+        "Content-type": contentType,
       });
       responce.end(content);
     }
